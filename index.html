@@ -1,0 +1,709 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Translate Masry</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Cairo:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#EFEEE1;
+    --surface:#FBFAF3;
+    --surface-2:#F2F0E4;
+    --ink:#17262A;
+    --ink-soft:#54666A;
+    --sea:#1C6E76;
+    --sea-deep:#123F45;
+    --marigold:#C9860F;
+    --marigold-soft:#F4E3C0;
+    --border:rgba(23,38,42,0.14);
+    --border-soft:rgba(23,38,42,0.08);
+    --danger:#B4453A;
+    --shadow:0 1px 2px rgba(23,38,42,0.06), 0 8px 24px -12px rgba(23,38,42,0.18);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1B1C;
+      --surface:#16292B;
+      --surface-2:#1C3234;
+      --ink:#ECEFE7;
+      --ink-soft:#A7BCBD;
+      --sea:#5FBDC3;
+      --sea-deep:#0E2E32;
+      --marigold:#EFB94D;
+      --marigold-soft:#3A3018;
+      --border:rgba(236,239,231,0.16);
+      --border-soft:rgba(236,239,231,0.09);
+      --danger:#E38177;
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 28px -12px rgba(0,0,0,0.55);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1B1C;
+    --surface:#16292B;
+    --surface-2:#1C3234;
+    --ink:#ECEFE7;
+    --ink-soft:#A7BCBD;
+    --sea:#5FBDC3;
+    --sea-deep:#0E2E32;
+    --marigold:#EFB94D;
+    --marigold-soft:#3A3018;
+    --border:rgba(236,239,231,0.16);
+    --border-soft:rgba(236,239,231,0.09);
+    --danger:#E38177;
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 28px -12px rgba(0,0,0,0.55);
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Cairo', system-ui, sans-serif;
+    padding-inline:16px;
+    padding-block:28px 48px;
+  }
+  .wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:22px;}
+
+  header.top{display:flex;flex-direction:column;gap:6px;padding-inline:2px;}
+  .eyebrow{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sea);font-weight:700;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(26px,7vw,32px);
+    line-height:1.08;
+    margin:0;
+    color:var(--ink);
+  }
+  .sub{color:var(--ink-soft);font-size:14.5px;line-height:1.5;margin:0;max-width:46ch;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border-soft);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+  .card-title{display:flex;align-items:center;gap:8px;}
+  .card-title .tag{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:7px;
+    background:var(--sea-deep);color:#fff;
+    font-size:12px;font-weight:700;flex:none;
+  }
+  .card h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;font-size:18px;margin:0;color:var(--ink);
+  }
+  .card .hint{font-size:12.5px;color:var(--ink-soft);}
+
+  textarea{
+    width:100%;resize:vertical;min-height:78px;
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:11px 13px;
+    font-family:inherit;font-size:15px;line-height:1.5;
+    color:var(--ink);
+  }
+  textarea:focus{outline:2px solid var(--sea);outline-offset:1px;}
+  textarea::placeholder{color:var(--ink-soft);opacity:.75;}
+
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
+  button{
+    font-family:inherit;font-size:14px;font-weight:600;
+    border-radius:10px;border:1px solid transparent;
+    padding:10px 14px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:7px;
+    transition:opacity .15s ease, transform .1s ease;
+  }
+  button:active{transform:scale(.98);}
+  button:disabled{opacity:.5;cursor:default;}
+  .btn-primary{background:var(--sea);color:#fff;}
+  .btn-primary:hover:not(:disabled){background:var(--sea-deep);}
+  .btn-ghost{background:transparent;color:var(--sea);border-color:var(--border);}
+  .btn-ghost:hover:not(:disabled){background:var(--surface-2);}
+  .btn-marigold{background:var(--marigold-soft);color:var(--marigold);border-color:transparent;}
+  .btn-small{padding:7px 11px;font-size:12.5px;border-radius:8px;}
+
+  .result{
+    border-radius:12px;
+    padding:13px 14px;
+    background:var(--surface-2);
+    border:1px solid var(--border-soft);
+    font-size:15.5px;line-height:1.6;
+    min-height:44px;white-space:pre-wrap;
+  }
+  .result.arabic{font-family:'Cairo',sans-serif;font-size:17px;font-weight:500;}
+  .result.empty{color:var(--ink-soft);font-style:italic;font-size:13.5px;}
+  .result.error{color:var(--danger);}
+
+  .note{font-size:12px;color:var(--ink-soft);}
+  .copied-flag{font-size:12px;color:var(--sea);font-weight:700;opacity:0;transition:opacity .2s;}
+  .copied-flag.show{opacity:1;}
+
+  .suggestions{display:flex;flex-direction:column;gap:8px;}
+  .suggestion{
+    border:1px solid var(--border);border-radius:12px;
+    padding:11px 13px;background:var(--surface-2);
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .suggestion .label{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--sea);}
+  .suggestion .text{font-family:'Cairo',sans-serif;font-size:16.5px;font-weight:500;direction:rtl;text-align:right;}
+  .suggestion .actions{display:flex;gap:8px;}
+
+  .final{
+    border:1.5px solid var(--marigold);
+    background:var(--marigold-soft);
+    border-radius:14px;
+    padding:14px;display:flex;flex-direction:column;gap:10px;
+  }
+  .final textarea{
+    background:var(--surface);
+    min-height:70px;
+  }
+  .final #finalArabic{
+    direction:rtl;text-align:right;
+    font-family:'Cairo',sans-serif;font-size:17px;font-weight:500;
+    min-height:90px;
+  }
+  .final .hint{margin-top:2px;margin-bottom:-4px;font-weight:600;}
+
+  .history{display:flex;flex-direction:column;gap:8px;}
+  .hist-item{
+    border:1px solid var(--border-soft);border-radius:10px;
+    padding:9px 11px;background:var(--surface-2);
+    font-size:12.5px;color:var(--ink-soft);
+    display:flex;flex-direction:column;gap:3px;cursor:pointer;
+  }
+  .hist-item:hover{border-color:var(--border);}
+  .hist-item b{color:var(--ink);font-weight:600;}
+  .hist-empty{font-size:12.5px;color:var(--ink-soft);font-style:italic;}
+
+  .banner{
+    border-radius:12px;padding:11px 13px;font-size:13px;line-height:1.5;
+    background:var(--surface-2);border:1px dashed var(--border);color:var(--ink-soft);
+    display:none;
+  }
+  .banner.show{display:block;}
+
+  footer.foot{text-align:center;font-size:11.5px;color:var(--ink-soft);padding-top:6px;}
+
+  @media (max-width:380px){
+    .row{gap:6px;}
+    button{padding:9px 11px;font-size:13px;}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <span class="eyebrow">Masry ⇄ English</span>
+    <h1>Translate Masry</h1>
+    <p class="sub">Paste what they sent, get it in English. Write back in English or Masry — either way, it lands ready to send.</p>
+  </header>
+
+  <div id="unavailableBanner" class="banner">
+    Live translation needs Claude enabled for this page. Open this link in the Claude app or claude.ai, signed in, to use it.
+  </div>
+
+  <section class="card">
+    <div class="card-head">
+      <div class="card-title"><span class="tag">١</span><h2>What they sent</h2></div>
+    </div>
+    <p class="hint">Paste their WhatsApp message — Arabic script or Arabizi, doesn't matter.</p>
+    <textarea id="inIncoming" dir="auto" placeholder="عامله ايه يا حبيبتي، من زمان ما بقيتيش بترد بسرعة..."></textarea>
+    <div class="row">
+      <button class="btn-primary" id="btnTranslateIn">Translate</button>
+      <button class="btn-ghost btn-small" id="btnPasteIn">Paste &amp; go</button>
+      <button class="btn-ghost btn-small" id="btnClearIn">Clear</button>
+      <span id="inStatus" class="note"></span>
+    </div>
+    <div id="inResult" class="result empty">Translation will show up here.</div>
+    <div class="row" id="afterInRow" style="display:none;">
+      <button class="btn-marigold btn-small" id="btnSuggest">Suggest a reply</button>
+    </div>
+    <div id="suggestions" class="suggestions" style="display:none;"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <div class="card-title"><span class="tag">٢</span><h2>Write it yourself</h2></div>
+    </div>
+    <p class="hint">Type your reply in English (or rough Arabic) — it'll come back as natural spoken Masry.</p>
+    <textarea id="inOutgoing" dir="auto" placeholder="e.g. Tell her I'm coming to visit next month and I miss her cooking..."></textarea>
+    <div class="row">
+      <button class="btn-primary" id="btnTranslateOut">Translate to Masry</button>
+      <button class="btn-ghost btn-small" id="btnClearOut">Clear</button>
+      <span id="outStatus" class="note"></span>
+    </div>
+  </section>
+
+  <section class="card final" id="finalCard" style="display:none;">
+    <div class="card-title"><span class="tag" style="background:var(--marigold);color:var(--sea-deep);">٣</span><h2>Ready to send</h2></div>
+    <label class="hint" for="finalEnglish">English (edit freely)</label>
+    <textarea id="finalEnglish" dir="ltr"></textarea>
+    <div class="row">
+      <button class="btn-ghost btn-small" id="btnRetranslate">Update Masry from English</button>
+      <span id="retranslateStatus" class="note"></span>
+    </div>
+    <label class="hint" for="finalArabic">Masry — this is what gets sent</label>
+    <textarea id="finalArabic" dir="rtl"></textarea>
+    <div class="row">
+      <button class="btn-primary" id="btnOpenWhatsApp">Open in WhatsApp</button>
+      <button class="btn-ghost btn-small" id="btnCopyFinal">Copy instead</button>
+      <span class="copied-flag" id="copiedFlag">Copied</span>
+    </div>
+    <p class="hint" style="margin:0;">Opens WhatsApp with this message already typed in — pick the chat and tap send. No copying needed.</p>
+  </section>
+
+  <section class="card" id="historyCard" style="display:none;">
+    <div class="card-head">
+      <div class="card-title"><h2 style="font-size:15px;">Recent</h2></div>
+      <button class="btn-ghost btn-small" id="btnClearHistory">Clear</button>
+    </div>
+    <div class="history" id="historyList"></div>
+  </section>
+
+  <footer class="foot">Translations run through Claude on your own account — nothing is stored anywhere but this browser.</footer>
+</div>
+
+<script src="claude-shim.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var els = {
+    unavailableBanner: document.getElementById('unavailableBanner'),
+    inIncoming: document.getElementById('inIncoming'),
+    btnTranslateIn: document.getElementById('btnTranslateIn'),
+    btnPasteIn: document.getElementById('btnPasteIn'),
+    btnClearIn: document.getElementById('btnClearIn'),
+    inStatus: document.getElementById('inStatus'),
+    inResult: document.getElementById('inResult'),
+    afterInRow: document.getElementById('afterInRow'),
+    btnSuggest: document.getElementById('btnSuggest'),
+    suggestions: document.getElementById('suggestions'),
+    inOutgoing: document.getElementById('inOutgoing'),
+    btnTranslateOut: document.getElementById('btnTranslateOut'),
+    btnClearOut: document.getElementById('btnClearOut'),
+    outStatus: document.getElementById('outStatus'),
+    finalCard: document.getElementById('finalCard'),
+    finalEnglish: document.getElementById('finalEnglish'),
+    finalArabic: document.getElementById('finalArabic'),
+    btnRetranslate: document.getElementById('btnRetranslate'),
+    retranslateStatus: document.getElementById('retranslateStatus'),
+    btnOpenWhatsApp: document.getElementById('btnOpenWhatsApp'),
+    btnCopyFinal: document.getElementById('btnCopyFinal'),
+    copiedFlag: document.getElementById('copiedFlag'),
+    historyCard: document.getElementById('historyCard'),
+    historyList: document.getElementById('historyList'),
+    btnClearHistory: document.getElementById('btnClearHistory')
+  };
+
+  var sampleFn = null;      // resolved capability, or null
+  var lastEnglishGloss = ""; // last translated-to-English text, for reply suggestions
+  var lastIncomingRaw = "";
+  var thread = [];          // {who:'her'|'me', original, translated, at}
+  var currentInCtl = null, currentOutCtl = null, currentSuggestCtl = null, currentRetransCtl = null;
+  var lastFinalEnglishSynced = "";
+
+  // ---------- storage (best-effort, per-viewer convenience only) ----------
+  function loadThread(){
+    try{
+      var raw = localStorage.getItem('masry-bridge-thread');
+      if(raw){ thread = JSON.parse(raw).slice(0,8); }
+    }catch(e){ thread = []; }
+  }
+  function saveThread(){
+    try{ localStorage.setItem('masry-bridge-thread', JSON.stringify(thread.slice(0,8))); }catch(e){}
+  }
+  function renderHistory(){
+    if(!thread.length){ els.historyCard.style.display='none'; return; }
+    els.historyCard.style.display='flex';
+    els.historyList.innerHTML = '';
+    thread.slice(0,8).forEach(function(item){
+      var div = document.createElement('div');
+      div.className = 'hist-item';
+      var whoLabel = item.who === 'her' ? 'Their message' : 'Your reply';
+      div.innerHTML = '<b>' + whoLabel + '</b><span>' + escapeHtml(truncate(item.original, 70)) + '</span>';
+      div.addEventListener('click', function(){
+        if(item.who === 'her'){
+          els.inIncoming.value = item.original;
+          els.inResult.textContent = item.translated;
+          els.inResult.className = 'result';
+          lastEnglishGloss = item.translated;
+          lastIncomingRaw = item.original;
+          els.afterInRow.style.display = 'flex';
+        }else{
+          els.inOutgoing.value = item.original;
+          showFinal({en: item.original, ar: item.translated});
+        }
+      });
+      els.historyList.appendChild(div);
+    });
+  }
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function truncate(s, n){ return s.length > n ? s.slice(0,n) + '…' : s; }
+
+  // ---------- capability init ----------
+  function getQueryText(name){
+    try{
+      var v = new URLSearchParams(window.location.search).get(name);
+      return v && v.trim() ? v : null;
+    }catch(e){ return null; }
+  }
+
+  async function init(){
+    loadThread();
+    renderHistory();
+    try{
+      sampleFn = window.claude ? await window.claude.use('sample') : null;
+    }catch(e){ sampleFn = null; }
+    if(!sampleFn){
+      els.unavailableBanner.classList.add('show');
+      els.btnTranslateIn.disabled = true;
+      els.btnTranslateOut.disabled = true;
+    }
+
+    // Opened from a Shortcut / share sheet with ?in= or ?out= — skip straight to translating
+    var qIn = getQueryText('in');
+    var qOut = getQueryText('out');
+    try{ window.history.replaceState(null, '', window.location.pathname); }catch(e){}
+    if(qIn){
+      els.inIncoming.value = qIn;
+      if(sampleFn) translateIncoming();
+    }else if(qOut){
+      els.inOutgoing.value = qOut;
+      if(sampleFn) translateOutgoing();
+    }
+  }
+
+  async function pasteAndTranslate(){
+    if(!sampleFn){ els.unavailableBanner.classList.add('show'); return; }
+    try{
+      var t = await navigator.clipboard.readText();
+      if(t && t.trim()){
+        els.inIncoming.value = t;
+        translateIncoming();
+      }else{
+        els.inStatus.textContent = 'Clipboard looks empty.';
+      }
+    }catch(e){
+      els.inStatus.textContent = "Couldn't read clipboard — paste manually.";
+    }
+  }
+
+  function errorCopy(code){
+    switch(code){
+      case 'not_granted': return "Translation isn't allowed for this page right now.";
+      case 'sampling_disabled': return "Claude isn't available on this account.";
+      case 'rate_limited': return "A lot of requests at once — wait a moment and try again.";
+      case 'session_expired': return "You've been signed out — sign back in to Claude and reload.";
+      case 'prompt_too_large': return "That message is too long — try a shorter excerpt.";
+      case 'cancelled': return "";
+      case 'refused': return "Claude couldn't process that one — try rephrasing.";
+      case 'empty_completion': return "Didn't get a reply — try again.";
+      default: return "Something went wrong — try again in a moment.";
+    }
+  }
+
+  // ---------- translate incoming (her message -> English) ----------
+  async function translateIncoming(){
+    var text = els.inIncoming.value.trim();
+    if(!text) return;
+    if(!sampleFn){ els.unavailableBanner.classList.add('show'); return; }
+
+    if(currentInCtl) currentInCtl.abort();
+    var ctl = new AbortController();
+    currentInCtl = ctl;
+
+    els.btnTranslateIn.disabled = true;
+    els.inStatus.textContent = 'Translating…';
+    els.inResult.className = 'result';
+    els.inResult.textContent = 'Thinking…';
+    els.afterInRow.style.display = 'none';
+    els.suggestions.style.display = 'none';
+    els.suggestions.innerHTML = '';
+
+    var prompt = "You're helping an English speaker read a WhatsApp message. "
+      + "The message is in Egyptian Arabic (Masry), sometimes mixed with Arabizi (Arabic written in Latin letters/numbers) or a little English. "
+      + "Translate it into warm, natural English that keeps the tone (affectionate, teasing, worried, formal, etc). "
+      + "If a phrase is a family idiom, a blessing, or a cultural reference that doesn't translate directly, add one short parenthetical note explaining it — otherwise don't add commentary. "
+      + "Reply with only the translation (and the optional short parenthetical), nothing else, no preamble.\n\nMessage:\n" + text;
+
+    try{
+      var res = await sampleFn(prompt, {
+        modelTier: 'default',
+        cache: false,
+        signal: ctl.signal,
+        onText: function(u){ els.inResult.textContent = u.text; }
+      });
+      els.inResult.textContent = res.text;
+      els.inResult.className = 'result';
+      lastEnglishGloss = res.text;
+      lastIncomingRaw = text;
+      els.afterInRow.style.display = 'flex';
+      els.inStatus.textContent = res.truncated ? 'Cut short — try a shorter message.' : '';
+
+      thread.unshift({who:'her', original:text, translated:res.text, at:Date.now()});
+      thread = thread.slice(0,8);
+      saveThread();
+      renderHistory();
+    }catch(e){
+      if(e.code === 'cancelled') return;
+      els.inResult.textContent = e.text || errorCopy(e.code);
+      els.inResult.className = 'result error';
+      els.inStatus.textContent = errorCopy(e.code);
+    }finally{
+      els.btnTranslateIn.disabled = false;
+      if(currentInCtl === ctl) currentInCtl = null;
+    }
+  }
+
+  // ---------- suggest replies ----------
+  async function suggestReplies(){
+    if(!sampleFn || !lastEnglishGloss) return;
+    if(currentSuggestCtl) currentSuggestCtl.abort();
+    var ctl = new AbortController();
+    currentSuggestCtl = ctl;
+
+    els.btnSuggest.disabled = true;
+    els.btnSuggest.textContent = 'Thinking…';
+    els.suggestions.style.display = 'flex';
+    els.suggestions.innerHTML = '<div class="hint">Coming up with a couple of options…</div>';
+
+    var recent = thread.slice(0,3).map(function(t){
+      return (t.who === 'her' ? 'Them: ' : 'Me: ') + t.translated;
+    }).reverse().join('\n');
+
+    var prompt = "You're helping the user reply on WhatsApp, in Egyptian Arabic (Masry), written in Arabic script — "
+      + "natural, casual, spoken phrasing, contractions are fine, not Modern Standard Arabic, not stiff or formal.\n\n"
+      + (recent ? ("Recent messages in this conversation (English gloss, oldest first):\n" + recent + "\n\n") : "")
+      + "Their latest message (English gloss): " + lastEnglishGloss + "\n\n"
+      + "Write two short reply options for the user to send as-is or tweak: one warmer/longer, one brief.\n"
+      + "Reply with ONLY a JSON array of exactly 2 objects: {\"label\": a short label like \"Warm reply\" or \"Quick reply\", "
+      + "\"en\": a plain English gloss of the reply (what it says, not a literal word-for-word crib), "
+      + "\"ar\": the reply written in Egyptian Arabic script}. No other text.";
+
+    try{
+      var arr = await sampleFn.json(prompt, { modelTier: 'default', signal: ctl.signal });
+      if(!Array.isArray(arr) || !arr.length) throw {code:'empty_completion'};
+      els.suggestions.innerHTML = '';
+      arr.forEach(function(item){
+        var div = document.createElement('div');
+        div.className = 'suggestion';
+        var label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = String(item.label || 'Reply');
+        var enLine = document.createElement('div');
+        enLine.className = 'hint';
+        enLine.textContent = String(item.en || '');
+        var text = document.createElement('div');
+        text.className = 'text';
+        text.textContent = String(item.ar || '');
+        var actions = document.createElement('div');
+        actions.className = 'actions';
+        var useBtn = document.createElement('button');
+        useBtn.className = 'btn-marigold btn-small';
+        useBtn.textContent = 'Use this — edit below';
+        useBtn.addEventListener('click', function(){
+          showFinal({en: String(item.en || ''), ar: String(item.ar || '')});
+        });
+        actions.appendChild(useBtn);
+        div.appendChild(label);
+        div.appendChild(enLine);
+        div.appendChild(text);
+        div.appendChild(actions);
+        els.suggestions.appendChild(div);
+      });
+    }catch(e){
+      if(e.code === 'cancelled'){ els.suggestions.style.display='none'; return; }
+      els.suggestions.innerHTML = '<div class="result error">' + escapeHtml(errorCopy(e.code) || "Couldn't get suggestions — try again.") + '</div>';
+    }finally{
+      els.btnSuggest.disabled = false;
+      els.btnSuggest.textContent = 'Suggest a reply';
+      if(currentSuggestCtl === ctl) currentSuggestCtl = null;
+    }
+  }
+
+  // ---------- translate outgoing (her own text -> Masry) ----------
+  async function translateOutgoing(){
+    var text = els.inOutgoing.value.trim();
+    if(!text) return;
+    if(!sampleFn){ els.unavailableBanner.classList.add('show'); return; }
+
+    if(currentOutCtl) currentOutCtl.abort();
+    var ctl = new AbortController();
+    currentOutCtl = ctl;
+
+    els.btnTranslateOut.disabled = true;
+    els.outStatus.textContent = 'Translating…';
+
+    var prompt = "Translate the following into natural, spoken Egyptian Arabic (Masry), written in Arabic script — "
+      + "casual and warm, the way people actually text each other, not Modern Standard Arabic and not stiff or overly formal. "
+      + "If the text is already in Arabic, polish it into natural Masry phrasing rather than a literal fix. "
+      + "Reply with only the Masry translation, nothing else.\n\nText:\n" + text;
+
+    try{
+      var res = await sampleFn(prompt, {
+        modelTier: 'default',
+        cache: false,
+        signal: ctl.signal,
+        onText: function(u){ showFinal({en: text, ar: u.text, streaming:true}); }
+      });
+      showFinal({en: text, ar: res.text});
+      els.outStatus.textContent = res.truncated ? 'Cut short — try less at a time.' : '';
+      thread.unshift({who:'me', original:text, translated:res.text, at:Date.now()});
+      thread = thread.slice(0,8);
+      saveThread();
+      renderHistory();
+    }catch(e){
+      if(e.code === 'cancelled') return;
+      els.outStatus.textContent = errorCopy(e.code);
+    }finally{
+      els.btnTranslateOut.disabled = false;
+      if(currentOutCtl === ctl) currentOutCtl = null;
+    }
+  }
+
+  function showFinal(opts){
+    els.finalCard.style.display = 'flex';
+    if(typeof opts.en === 'string') els.finalEnglish.value = opts.en;
+    if(typeof opts.ar === 'string') els.finalArabic.value = opts.ar;
+    lastFinalEnglishSynced = els.finalEnglish.value;
+    if(!opts.streaming){
+      els.finalCard.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+  }
+
+  // re-translate just the Arabic side after she edits the English by hand
+  async function retranslateFinal(){
+    var text = els.finalEnglish.value.trim();
+    if(!text || !sampleFn) return;
+    if(currentRetransCtl) currentRetransCtl.abort();
+    var ctl = new AbortController();
+    currentRetransCtl = ctl;
+
+    els.btnRetranslate.disabled = true;
+    els.retranslateStatus.textContent = 'Updating…';
+
+    var prompt = "Translate the following into natural, spoken Egyptian Arabic (Masry), written in Arabic script — "
+      + "casual and warm, the way people actually text each other, not Modern Standard Arabic and not stiff or overly formal. "
+      + "Reply with only the Masry translation, nothing else.\n\nText:\n" + text;
+
+    try{
+      var res = await sampleFn(prompt, {
+        modelTier: 'default',
+        cache: false,
+        signal: ctl.signal,
+        onText: function(u){ els.finalArabic.value = u.text; }
+      });
+      els.finalArabic.value = res.text;
+      lastFinalEnglishSynced = text;
+      els.retranslateStatus.textContent = res.truncated ? 'Cut short — try less at a time.' : '';
+    }catch(e){
+      if(e.code === 'cancelled') return;
+      els.retranslateStatus.textContent = errorCopy(e.code);
+    }finally{
+      els.btnRetranslate.disabled = false;
+      if(currentRetransCtl === ctl) currentRetransCtl = null;
+    }
+  }
+
+  // Hands the message to WhatsApp itself — no clipboard involved. WhatsApp opens
+  // its own chat picker (since no specific number is given) with the text
+  // already sitting in the compose box; she just picks the chat and taps send.
+  function openInWhatsApp(){
+    var text = els.finalArabic.value.trim();
+    if(!text) return;
+    var url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text);
+    var a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  async function copyFinal(){
+    var text = els.finalArabic.value;
+    if(!text) return;
+    var ok = false;
+    try{
+      await navigator.clipboard.writeText(text);
+      ok = true;
+    }catch(e){
+      try{
+        els.finalArabic.focus();
+        els.finalArabic.select();
+        ok = document.execCommand('copy');
+      }catch(e2){ ok = false; }
+    }
+    if(ok){
+      els.copiedFlag.classList.add('show');
+      setTimeout(function(){ els.copiedFlag.classList.remove('show'); }, 1600);
+    }else{
+      els.finalArabic.focus();
+      els.finalArabic.select();
+    }
+  }
+
+  // ---------- wire up ----------
+  els.btnTranslateIn.addEventListener('click', translateIncoming);
+  els.btnPasteIn.addEventListener('click', pasteAndTranslate);
+  els.btnClearIn.addEventListener('click', function(){
+    els.inIncoming.value = '';
+    els.inResult.textContent = 'Translation will show up here.';
+    els.inResult.className = 'result empty';
+    els.afterInRow.style.display = 'none';
+    els.suggestions.style.display = 'none';
+    els.suggestions.innerHTML = '';
+  });
+  els.btnSuggest.addEventListener('click', suggestReplies);
+  els.btnTranslateOut.addEventListener('click', translateOutgoing);
+  els.btnClearOut.addEventListener('click', function(){ els.inOutgoing.value=''; els.outStatus.textContent=''; });
+  els.btnCopyFinal.addEventListener('click', copyFinal);
+  els.btnOpenWhatsApp.addEventListener('click', openInWhatsApp);
+  els.btnRetranslate.addEventListener('click', retranslateFinal);
+  els.finalEnglish.addEventListener('blur', function(){
+    var v = els.finalEnglish.value.trim();
+    if(v && v !== lastFinalEnglishSynced.trim()) retranslateFinal();
+  });
+  els.btnClearHistory.addEventListener('click', function(){
+    thread = [];
+    saveThread();
+    renderHistory();
+  });
+
+  // auto-translate when she pastes into the "her message" box — this is the closest
+  // thing to "automatic" without a native WhatsApp integration
+  els.inIncoming.addEventListener('paste', function(){
+    setTimeout(function(){
+      if(els.inIncoming.value.trim()) translateIncoming();
+    }, 60);
+  });
+
+  // auto-translate her own reply once she taps away from the box, if it changed
+  var lastOutValue = '';
+  els.inOutgoing.addEventListener('focus', function(){ lastOutValue = els.inOutgoing.value; });
+  els.inOutgoing.addEventListener('blur', function(){
+    var v = els.inOutgoing.value.trim();
+    if(v && v !== lastOutValue.trim()) translateOutgoing();
+  });
+
+  init();
+})();
+</script>
+
+</body></html>
